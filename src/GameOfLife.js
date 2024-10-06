@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './GameOfLife.css'
+// import styles from './GameOfLife.css'
 import cell from './Cell.js'
 
 class GameOfLife extends React.Component{
@@ -60,7 +60,7 @@ class GameOfLife extends React.Component{
                     <p>{this.state.board.map(row => <div> {row.map(square => cell(square))}</div>)}</p>
                     <button onClick={this.handleClick}>Button</button>
                     <button onClick={this.progressTurn}>ProgressTurn</button>
-                    <view style = {styles.square} />
+                    <view />
                 </div>)
                 }
 }
