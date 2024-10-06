@@ -1,6 +1,6 @@
 import React from 'react';
 // import styles from './GameOfLife.css'
-import cell from './Cell.js'
+import Cell from './Cell.js'
 
 class GameOfLife extends React.Component{
 
@@ -63,7 +63,7 @@ class GameOfLife extends React.Component{
 
     render(){
         return (<div>
-                    <p>{this.state.board.map((row, i) => <div> {row.map((square, j) => cell(square, this.createCellHandleClick(i, j)))}</div>)}</p>
+                    <p>{this.state.board.map((row, i) => <div> {row.map((square, j) => <Cell state={square} handleClick={this.createCellHandleClick(i, j)} />)}</div>)}</p>
                     <button onClick={this.handleClick}>Button</button>
                     <button onClick={this.progressTurn}>ProgressTurn</button>
                     <view />
