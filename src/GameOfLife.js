@@ -36,6 +36,12 @@ class GameOfLife extends React.Component{
         return 0;
     }
 
+    // returns onClick handler for a square of coords (row, column)
+    // NOTE: you can modify GameOfLife's state here
+    createCellHandleClick = (row, column) => { 
+        return (event) => console.log(`Square ${row}-${column} clicked!`); 
+    }
+
     surroundCount = (i,j) => {
         let mods = [-1,0,1];
         let count = 0;
@@ -57,7 +63,7 @@ class GameOfLife extends React.Component{
 
     render(){
         return (<div>
-                    <p>{this.state.board.map(row => <div> {row.map(square => cell(square))}</div>)}</p>
+                    <p>{this.state.board.map((row, i) => <div> {row.map((square, j) => cell(square, this.createCellHandleClick(i, j)))}</div>)}</p>
                     <button onClick={this.handleClick}>Button</button>
                     <button onClick={this.progressTurn}>ProgressTurn</button>
                     <view />
