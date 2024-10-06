@@ -63,7 +63,7 @@ class GameOfLife extends React.Component{
 
     render(){
         return (<div>
-                    <p>{this.state.board.map((row, i) => <div> {row.map((square, j) => <Cell state={square} handleClick={this.createCellHandleClick(i, j)} />)}</div>)}</p>
+                    <p>{this.state.board.map((row, i) => <div key={`row-${i}`}> {row.map((square, j) => <Cell state={square} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}</p>
                     <button onClick={this.handleClick}>Button</button>
                     <button onClick={this.progressTurn}>ProgressTurn</button>
                     <view />
