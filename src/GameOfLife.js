@@ -2,12 +2,14 @@ import React from 'react';
 // import styles from './GameOfLife.css'
 import Cell from './Cell.js'
 
+//import gsap from '@gsap/react';
+
 class GameOfLife extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            board: Array(this.props.height).fill(0).map(row => new Array(this.props.width).fill(Math.floor(Math.random(0) + 0.5)))
+            board: Array(this.props.height).fill(0).map(row => new Array(this.props.width).fill(0).map(x => x = Math.floor(Math.random(0) + 0.5)))
         };
     }
 
@@ -17,29 +19,43 @@ class GameOfLife extends React.Component{
     }
 
     progressTurn = () => {
-        let tempboard = this.state.board;
+        //let tempboard = this.state.board;
+        let tempboard = JSON.parse(JSON.stringify(this.state.board));
         for (let i = 0; i < this.props.height; i++) {
             for (let j = 0; j < this.props.width; j++) {
                 tempboard[i][j] = this.checkCell(i,j);
             }
         }
-        this.state.board = tempboard;
+        //this.state.board = tempboard;
         //this.setState(this.board, tempboard);
+        this.setState({ board : tempboard });
         this.forceUpdate();
     }
 
     checkCell = (i,j) => {
         let c = this.surroundCount(i,j);
-        if (c === 3 && this.state.board[i][j] === 0) return 1;
-        if ((c < 2 || c > 3) && this.state.board[i][j] === 1) return 0;
-        if ((c === 2 || c === 3) && this.state.board[i][j] === 1) return 1;
-        return 0;
+        let currentCell = this.state.board[i][j];
+        if (c < 2 && currentCell === 1) return 0;
+        if ((c === 2 || c === 3) && currentCell === 1) return 1;
+        if (c > 3 && currentCell === 1) return 0;
+        if (c === 3 && currentCell === 0) return 1;
+        return currentCell;
     }
 
     // returns onClick handler for a square of coords (row, column)
     // NOTE: you can modify GameOfLife's state here
-    createCellHandleClick = (row, column) => { 
-        return (event) => console.log(`Square ${row}-${column} clicked!`); 
+    createCellHandleClick = (r, c) => { 
+        //return (event) => console.log(`Square ${r}-${c} clicked!`); 
+        return (event) => this.flipbutton(r,c);
+    }
+
+    flipbutton = (i,j) => {
+        let tempboard = this.state.board;
+        tempboard[i][j] = this.state.board[i][j] === 1 ? 0 : 1;
+        this.setState({board:tempboard});
+//        gsap.to(".box", { x: 200 });
+        this.forceUpdate();
+        console.log(this.surroundCount(i,j));
     }
 
     surroundCount = (i,j) => {
