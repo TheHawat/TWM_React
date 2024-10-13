@@ -5,7 +5,10 @@ import ReactSlider from "react-slider"
 import life from "./cell_life.png"
 import dead from "./cell_dead.png"
 
-//import gsap from '@gsap/react';
+import {gsap} from 'gsap';
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 class GameOfLife extends React.Component{
 
@@ -56,10 +59,18 @@ class GameOfLife extends React.Component{
 
     flipbutton = (i,j) => {
         let tempboard = this.state.board;
+        let buttoncss = ".C" + i + "-" + j;
         tempboard[i][j] = this.state.board[i][j] === 1 ? 0 : 1;
+        const tl = gsap.timeline({
+            paused: true,
+            defaults: {duration: 1}}
+        ).to(buttoncss, { opacity: 0})
+        //.call(this.setState({board:tempboard}), 1)
+        .to(buttoncss, { opacity: 1 });
+        tl.restart();
         this.setState({board:tempboard});
-//        gsap.to(".box", { x: 200 });
-        this.forceUpdate();
+        //this.forceUpdate();
+        //gsap.to(buttoncss, { opacity: 1 });
         console.log(this.surroundCount(i,j));
     }
 
@@ -135,10 +146,10 @@ class GameOfLife extends React.Component{
 
     render(){
         return (<div>
-                    <p classname = "board">{this.state.board.map((row, i) => <div key={`row-${i}`}> {row.map((square, j) => <Cell state={square} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}</p>
+                    <p classname = "board">{this.state.board.map((row, i) => <div key={`row-${i}`}> {row.map((square, j) => <Cell state={square} r={i} c={j} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}</p>
                     <div>
                     <input className='cell' onClick={this.minus} type="image" src={dead}></input>
-                    <button>{this.state.w}</button>
+                    <button>{this.state.w}</button>Í
                     <input className='cell' onClick={this.plus} type="image" src={life}></input>
                     <input className='cell' onClick={this.minush} type="image" src={dead}></input>
                     <button>{this.state.h}</button>
