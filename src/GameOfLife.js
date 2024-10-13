@@ -4,6 +4,8 @@ import Cell from './Cell.js'
 import ReactSlider from "react-slider"
 import life from "./cell_life.png"
 import dead from "./cell_dead.png"
+import pluscell from "./cl_add_v3.png"
+import minuscell from "./cl_remove.png"
 
 import {gsap} from 'gsap';
 import { useGSAP } from "@gsap/react";
@@ -145,15 +147,23 @@ class GameOfLife extends React.Component{
     }
 
     render(){
-        return (<div>
-                    <p classname = "board">{this.state.board.map((row, i) => <div key={`row-${i}`}> {row.map((square, j) => <Cell state={square} r={i} c={j} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}</p>
+        return (
+        <div>
+            <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell' type="image" src={minuscell}/>)}</div>
+                    <div classname = "board">
+                        {this.state.board.map((row, i) =>
+                            <div key={`row-${i}`}> {row.map((square, j) =>
+                                <Cell state={square} r={i} c={j} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}
+                            </div>
                     <div>
-                    <input className='cell' onClick={this.minus} type="image" src={dead}></input>
-                    <button>{this.state.w}</button>Í
-                    <input className='cell' onClick={this.plus} type="image" src={life}></input>
-                    <input className='cell' onClick={this.minush} type="image" src={dead}></input>
-                    <button>{this.state.h}</button>
-                    <input className='cell' onClick={this.plush} type="image" src={life}></input>
+                <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell' type="image" src={minuscell}/>)}</div>
+                
+                    <input  className='cell' onClick={this.minus} type="image" src={minuscell}></input>
+                    <button classname='cell'>{this.state.w}</button>
+                    <input  className='cell' onClick={this.plus} type="image" src={pluscell}></input>
+                    <input  className='cell' onClick={this.minush} type="image" src={minuscell}></input>
+                    <button classname='cell'>{this.state.h}</button>
+                    <input  className='cell' onClick={this.plush} type="image" src={pluscell}></input>
                     </div>
                     <button onClick={this.handleClick}>Button</button>
                     <button onClick={this.progressTurn}>ProgressTurn</button>
