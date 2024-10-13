@@ -8,6 +8,20 @@
   width: 40px;
 }
 
+.rev{
+  transform: rotate(180deg);
+}
+
+.left
+{
+  transform: rotate(270deg);
+}
+
+.right
+{
+  transform: rotate(90deg);
+}
+
   .horizontal-slider {
     width: 100%;
     max-width: 100px;
@@ -38,7 +52,7 @@
 }
 
 .board{
-  padding: 20px 20px;
+  
 }
 
 .example-thumb {

@@ -4,8 +4,9 @@ import Cell from './Cell.js'
 import ReactSlider from "react-slider"
 import life from "./cell_life.png"
 import dead from "./cell_dead.png"
-import pluscell from "./cl_add_v3.png"
+import pluscell from "./cell_add_v4.png"
 import minuscell from "./cl_remove.png"
+import border from "./cell_border_v2.png"
 
 import {gsap} from 'gsap';
 import { useGSAP } from "@gsap/react";
@@ -149,14 +150,17 @@ class GameOfLife extends React.Component{
     render(){
         return (
         <div>
-            <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell' type="image" src={minuscell}/>)}</div>
+            <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell' type="image" src={border}/>)}</div>
                     <div classname = "board">
                         {this.state.board.map((row, i) =>
-                            <div key={`row-${i}`}> {row.map((square, j) =>
-                                <Cell state={square} r={i} c={j} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}</div>)}
+                            <div key={`row-${i}`}> 
+                                <input className='cell left' type="image" src={border}/>
+                                {row.map((square, j) =><Cell state={square} r={i} c={j} handleClick={this.createCellHandleClick(i, j)} key={`cell-${i}-${j}`}/>)}
+                                <input className='cell right' type="image" src={border}/>
+                                </div>)}
                             </div>
                     <div>
-                <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell' type="image" src={minuscell}/>)}</div>
+                <div>{Array(this.state.w+2).fill(0).map((x) => <input className='cell rev' type="image" src={border}/>)}</div>
                 
                     <input  className='cell' onClick={this.minus} type="image" src={minuscell}></input>
                     <button classname='cell'>{this.state.w}</button>
