@@ -66,12 +66,15 @@ class GameOfLife extends React.Component{
         tempboard[i][j] = this.state.board[i][j] === 1 ? 0 : 1;
         const tl = gsap.timeline({
             paused: true,
-            defaults: {duration: 1}}
-        ).to(buttoncss, { opacity: 0})
-        //.call(this.setState({board:tempboard}), 1)
-        .to(buttoncss, { opacity: 1 });
+            defaults: { duration: 1 }
+        });
+        tl.to(buttoncss, {
+            opacity: 0, onComplete: () => {
+                this.setState({ board: tempboard });
+                tl.to(buttoncss, { opacity: 1 });
+            }
+        })
         tl.restart();
-        this.setState({board:tempboard});
         //this.forceUpdate();
         //gsap.to(buttoncss, { opacity: 1 });
         console.log(this.surroundCount(i,j));
